@@ -12,8 +12,7 @@ export function init(directives) {
                 handleElementUpdate(target);
             }
 
-            if (type === "characterData") {
-                if (target.parentElement === null) return;
+            if (type === "characterData" && target.parentElement !== null) {
                 handleElementUpdate(target.parentElement)
             }
 
