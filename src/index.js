@@ -1,5 +1,5 @@
 /**
- * @param {import("../directive.model").Directive[]} directives 
+ * @param {import("./models/directive.model").Directive[]} directives 
  */
 export function init(directives) {
     loopOnElementRecursivelly(document.body, (element) => handleElementSetup(element, directives))
@@ -35,7 +35,7 @@ export function init(directives) {
 
 /**
  * @param {Element} element 
- * @param {import("../directive.model").Directive[]} directives 
+ * @param {import("./models/directive.model").Directive[]} directives 
 */
 function handleElementSetup(element, directives) {
     for (const { selector, setup } of directives) {

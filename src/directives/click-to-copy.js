@@ -1,4 +1,4 @@
-/** @type {import("../../directive.model").Directive} */
+/** @type {import("../models/directive.model").Directive} */
 export const clickToCopyDirective = {
     selector: "[clickToCopy]",
     setup: (element) => {

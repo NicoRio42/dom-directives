@@ -1,4 +1,4 @@
-/** @type {import("../../directive.model").Directive} */
+/** @type {import("../models/directive.model").Directive} */
 export const clickOutsideDirective = {
     selector: "[onClickOutside]",
     setup: (element) => {

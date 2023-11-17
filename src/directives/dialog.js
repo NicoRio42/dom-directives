@@ -1,4 +1,4 @@
-/** @type {import("../../directive.model").Directive} */
+/** @type {import("../models/directive.model").Directive} */
 export const openDialogDirective = {
     selector: "[openDialog]",
     setup: (element) => {
@@ -24,7 +24,7 @@ export const openDialogDirective = {
     }
 }
 
-/** @type {import("../../directive.model").Directive} */
+/** @type {import("../models/directive.model").Directive} */
 export const closeDialogDirective = {
     selector: "[closeDialog]",
     setup: (element) => {
@@ -63,7 +63,7 @@ export const closeDialogDirective = {
 }
 
 
-/** @type {import("../../directive.model").Directive} */
+/** @type {import("../models/directive.model").Directive} */
 export const closeDialogClickOutsideDirective = {
     selector: "[closeDialogClickOutside]",
     setup: (element) => {
