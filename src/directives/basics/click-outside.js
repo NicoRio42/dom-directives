@@ -1,10 +1,8 @@
-/** @type {import("../models/directive.model").Directive} */
+/** @type {import("../../models/directive.model").Directive} */
 export const clickOutsideDirective = {
-    selector: "[onClickOutside]",
-    setup: (element) => {
-        const callbackContent = element.getAttribute("onClickOutside");
-
-        if (callbackContent === null || callbackContent === '') {
+    attributeName: "onClickOutside",
+    setup: (element, callbackContent) => {
+        if (callbackContent === '') {
             throw new Error("No callback for clickOutside directive.")
         }
 
@@ -15,7 +13,7 @@ export const clickOutsideDirective = {
          */
         const eventListener = (event) => {
             // @ts-ignore
-            if (element.open || element.contains(event.target)) return;
+            if (element.contains(event.target)) return;
             callback(event)
         }
 

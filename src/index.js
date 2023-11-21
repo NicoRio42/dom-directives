@@ -6,14 +6,10 @@ export function init(directives) {
 
     const observer = new MutationObserver((mutationList) => {
         for (const mutation of mutationList) {
-            const { addedNodes, type, target, removedNodes } = mutation;
+            const { addedNodes, type, target, removedNodes, attributeName } = mutation;
 
-            if (type === "attributes" && isElement(target)) {
-                handleElementUpdate(target);
-            }
-
-            if (type === "characterData" && target.parentElement !== null) {
-                handleElementUpdate(target.parentElement)
+            if (type === "attributes" && isElement(target) && attributeName !== null) {
+                handleElementUpdate(target, attributeName);
             }
 
             if (type === "childList") {
@@ -29,54 +25,50 @@ export function init(directives) {
         }
     });
 
-    observer.observe(document.body, { attributes: true, childList: true, subtree: true, characterData: true })
+    observer.observe(document.body, { attributes: true, childList: true, subtree: true })
 }
-
 
 /**
  * @param {Element} element 
  * @param {import("./models/directive.model").Directive[]} directives 
 */
 function handleElementSetup(element, directives) {
-    for (const { selector, setup } of directives) {
-        if (!element.matches(selector)) continue;
+    for (const { attributeName, setup } of directives) {
+        const attributeValue = element.getAttribute(attributeName);
+        if (attributeValue === null) continue;
 
-        const callbacks = setup(element);
+        const callbacks = setup(element, attributeValue);
         if (callbacks === undefined) return;
 
-        // @ts-ignore
-        if (!element.$$update) element.$$update = [];
-        // @ts-ignore
-        if (callbacks.update) element.$$update.push(callbacks.update);
-        // @ts-ignore
+        if (!element.$$update) { element.$$update = new Map() };
+        if (callbacks.update) element.$$update.set(attributeName, callbacks.update);
         if (!element.$$cleanup) element.$$cleanup = [];
-        // @ts-ignore
         if (callbacks.cleanup) element.$$cleanup.push(callbacks.cleanup);
     }
 }
 
 /**
  * @param {Element} element 
+ * @param {string} attributeName 
  */
-function handleElementUpdate(element) {
-    // @ts-ignore
-    if (!element.$$update) return;
-    // @ts-ignore
-    for (const updateCallback of element.$$update) {
-        updateCallback(element);
-    }
+function handleElementUpdate(element, attributeName) {
+    const updateCallback = element.$$update?.get(attributeName);
+    if (updateCallback === undefined) return;
+    updateCallback(element);
 }
 
 /**
  * @param {Element} element 
  */
 function handleElementCleanup(element) {
-    // @ts-ignore
     if (!element.$$cleanup) return;
-    // @ts-ignore
+
     for (const cleanupCallback of element.$$cleanup) {
         cleanupCallback(element);
     }
+
+    delete element.$$update;
+    delete element.$$cleanup;
 }
 
 /**

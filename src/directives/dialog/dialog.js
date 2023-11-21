@@ -1,10 +1,8 @@
-/** @type {import("../models/directive.model").Directive} */
+/** @type {import("../../models/directive.model").Directive} */
 export const openDialogDirective = {
-    selector: "[openDialog]",
-    setup: (element) => {
-        const dialogId = element.getAttribute("openDialog");
-
-        if (dialogId === null || dialogId === '') {
+    attributeName: "openDialog",
+    setup: (element, dialogId) => {
+        if (dialogId === '') {
             throw new Error("The openDialog directive needs a dialog id parameter.")
         }
 
@@ -24,16 +22,14 @@ export const openDialogDirective = {
     }
 }
 
-/** @type {import("../models/directive.model").Directive} */
+/** @type {import("../../models/directive.model").Directive} */
 export const closeDialogDirective = {
-    selector: "[closeDialog]",
-    setup: (element) => {
-        const dialogId = element.getAttribute("closeDialog");
-
+    attributeName: "closeDialog",
+    setup: (element, dialogId) => {
         /** @type {HTMLDialogElement} */
         let dialog;
 
-        if (dialogId === null || dialogId === '') {
+        if (dialogId === '') {
             const foundDialog = element.closest('dialog')
 
             if (foundDialog === null) {
@@ -42,7 +38,6 @@ export const closeDialogDirective = {
 
             dialog = foundDialog
         } else {
-
             const foundDialog = document.getElementById(dialogId);
 
             if (foundDialog === null || !(foundDialog instanceof HTMLDialogElement)) {
@@ -63,9 +58,9 @@ export const closeDialogDirective = {
 }
 
 
-/** @type {import("../models/directive.model").Directive} */
+/** @type {import("../../models/directive.model").Directive} */
 export const closeDialogClickOutsideDirective = {
-    selector: "[closeDialogClickOutside]",
+    attributeName: "closeDialogClickOutside",
     setup: (element) => {
         if (!(element instanceof HTMLDialogElement)) {
             throw new Error("The closeDialogClickOutside attribute can only be used on a dialog element.")
@@ -75,7 +70,6 @@ export const closeDialogClickOutsideDirective = {
          * @param {Event} event 
          */
         const eventListener = ({ target }) => {
-            console.log(target)
             // @ts-ignore
             if (element.open || element.contains(target)) return;
             element.close();

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script type="module" src="./main.js"></script>
+  </head>
+
+  <body>
+    <form prettyClientValidation novalidate>
+      <p>
+        <label for="firstname">Firstname</label>
+        <input
+          type="text"
+          name="firstname"
+          id="firstname"
+          required
+          maxlength="20"
+        />
+      </p>
+
+      <p>
+        <label for="lastname">Last name</label>
+        <input
+          type="text"
+          name="lastname"
+          id="lastname"
+          required
+          maxlength="20"
+        />
+      </p>
+
+      <p>
+        <label for="gender">Gender</label>
+        <select name="gender" id="gender" required>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </p>
+
+      <p>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required />
+      </p>
+
+      <p>
+        <label for="birthday">Date of birth</label>
+        <input type="date" name="birthday" id="birthday" required />
+      </p>
+
+      <p>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required />
+      </p>
+
+      <p>
+        <label for="confirm-password">Confirm password</label>
+        <input
+          type="password"
+          name="confirm-password"
+          id="confirm-password"
+          match="password"
+          matchMessage="Password confirmation doesn't match the password above."
+          specialCharacters
+        />
+      </p>
+
+      <p><button type="submit">Login</button></p>
+    </form>
+  </body>
+</html>
+
+<style>
+  form {
+    max-width: 20rem;
+    margin: 1rem auto;
+  }
+
+  form p {
+    display: flex;
+    flex-direction: column;
+  }
+
+  p:has(input:required) label:first-child::after,
+  p:has(input:required) label:first-child::after,
+  p:has(textarea:required) label:first-child::after {
+    content: "*";
+    color: red;
+  }
+
+  label.error {
+    color: red;
+  }
+
+  form[data-submited] input:invalid,
+  form[data-submited] select:invalid,
+  form[data-submited] textarea:invalid {
+    border-color: red;
+  }
+</style>

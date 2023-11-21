@@ -4,35 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-
-    <script type="module" src="./main.js"></script>
   </head>
   <body>
-    <p onClickOutside="console.log('click outside !!!!')">toto</p>
-
-    <p clickToCopy>Tutu</p>
-
-    <button
-      type="button"
-      onclick="
-        const element = document.createElement('p');
-        element.textContent = 'LALALA';
-        this.insertAdjacentElement('afterend', element)
-    "
-    >
-      Add
-    </button>
-
-    <button type="button" onclick="this.previousElementSibling.remove()">
-      Remove
-    </button>
-
-    <button type="button" openDialog="the-dialog">Open dialog</button>
-
-    <dialog id="the-dialog" closeDialogClickOutside>
-      This is a dialog !
-
-      <button type="button" closeDialog>Close</button>
-    </dialog>
+    <nav>
+      <ul>
+        <li><a href="/tests/dialog/">Dialog</a></li>
+        <li><a href="/tests/form/">Form</a></li>
+      </ul>
+    </nav>
   </body>
 </html>
