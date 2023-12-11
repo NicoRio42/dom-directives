@@ -6,10 +6,14 @@
     <title>Document</title>
 
     <script type="module" src="./main.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
+    />
   </head>
 
   <body>
-    <form prettyClientValidation novalidate>
+    <form prettyClientValidation>
       <p>
         <label for="firstname">Firstname</label>
         <input
@@ -73,6 +77,23 @@
 </html>
 
 <style>
+  :root {
+    --font-size: 14px;
+    /* --border-radius: 0; */
+  }
+
+  @media screen and (min-width: 576px) {
+    :root {
+      --font-size: 15px;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    :root {
+      --font-size: 16px;
+    }
+  }
+
   form {
     max-width: 20rem;
     margin: 1rem auto;
@@ -87,16 +108,22 @@
   p:has(input:required) label:first-child::after,
   p:has(textarea:required) label:first-child::after {
     content: "*";
-    color: red;
+    color: var(--form-element-invalid-border-color);
   }
 
   label.error {
-    color: red;
+    color: var(--form-element-invalid-border-color);
   }
 
   form[data-submited] input:invalid,
   form[data-submited] select:invalid,
   form[data-submited] textarea:invalid {
-    border-color: red;
+    border-color: var(--form-element-invalid-border-color);
+  }
+
+  input:valid[data-had-errors],
+  select:valid[data-had-errors],
+  textarea:valid[data-had-errors] {
+    border-color: var(--form-element-valid-border-color);
   }
 </style>
